@@ -1,4 +1,4 @@
-package mshchurkin.GdApiTest;
+package mshchurkin.Controllers;
 
 import mshchurkin.Backend.APIWorker;
 import org.springframework.context.annotation.Scope;

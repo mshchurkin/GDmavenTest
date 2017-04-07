@@ -1,4 +1,4 @@
-package mshchurkin.GdApiTest;
+package mshchurkin.Controllers;
 
 import mshchurkin.Backend.APIWorker;
 import org.springframework.context.annotation.Scope;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.net.URL;
+
 
 @Controller
 @Scope("session")

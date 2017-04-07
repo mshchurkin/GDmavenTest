@@ -82,7 +82,6 @@ public class APIWorker {
         while ((output = br.readLine()) != null) {
             sb.append(output);
         }
-
 //        JsonReader jsonReader = Json.createReader(new StringReader(sb.toString()));
 //        JsonObject jsonObject=jsonReader.readObject();
         String myString = sb.toString();
