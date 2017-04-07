@@ -11,8 +11,18 @@ import java.util.Map;
 public class APIWorker {
 
     private String COOKIE_SESSION_ID;
-    private String USERNAME = "admin";
-    private String PASSWORD = "d0xkR5h675lO57P";
+
+    private static APIWorker instance;
+
+    private APIWorker() {
+    }
+
+    public static APIWorker getInstance() {
+        if (instance == null) {
+            instance = new APIWorker();
+        }
+        return instance;
+    }
 
     /**
      * GreenData API Authorization
@@ -52,45 +62,44 @@ public class APIWorker {
     /**
      * GreenData GET Methods worker
      *
-     * @param url       method url
+     * @param url    method url
      * @param params method params
-     * @return json array method result
+     * @return json string
      * @throws IOException can't establish connection IOException
      */
-    public JsonArray executeGet(URL url, Dictionary<String, String> params) throws IOException {
+    public String executeGet(URL url, Dictionary<String, String> params) throws IOException {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("Cookie", COOKIE_SESSION_ID);
-        int responseCode = con.getResponseCode();
         StringBuilder builder = new StringBuilder();
         builder.append(con.getResponseCode())
                 .append(" ")
                 .append(con.getResponseMessage())
                 .append("\n");
-
-        System.out.println(responseCode);
-        BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream())));
+        BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream()),"ISO-8859-1"));
         StringBuilder sb = new StringBuilder();
         String output;
         while ((output = br.readLine()) != null) {
             sb.append(output);
         }
-        JsonReader jsonReader = Json.createReader(new StringReader(sb.toString()));
-        JsonArray jsonArr = jsonReader.readArray();
-        Map<String, Object> json;
 
-        return jsonArr;
+//        JsonReader jsonReader = Json.createReader(new StringReader(sb.toString()));
+//        JsonObject jsonObject=jsonReader.readObject();
+        String myString = sb.toString();
+        byte bytes[] = myString.getBytes("ISO-8859-1");
+        String value = new String(bytes, "UTF-8");
+        return sb.toString();//new String(sb.toString().getBytes());
     }
 
     /**
      * GreenData POST Methods worker
-     * @param url method url
+     *
+     * @param url        method url
      * @param jsonObject method body as JSON
      * @return response code
      * @throws IOException can't establish connection IOException
      */
     int executePost(URL url, JsonObject jsonObject) throws IOException {
-
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         con.setDoOutput(true);

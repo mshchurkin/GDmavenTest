@@ -45,5 +45,7 @@
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="fancy" level="application" />
+    <orderEntry type="library" name="jsgrid" level="application" />
+    <orderEntry type="library" name="gijgo" level="application" />
   </component>
 </module>
