@@ -1,7 +1,10 @@
 package mshchurkin.Backend;
 
-import javax.json.*;
-import java.io.*;
+import javax.json.JsonObject;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Dictionary;
@@ -67,7 +70,7 @@ public class APIWorker {
      * @return json string
      * @throws IOException can't establish connection IOException
      */
-    public String executeGet(URL url, Dictionary<String, String> params) throws IOException {
+    public StringBuilder executeGet(URL url, Dictionary<String, String> params) throws IOException {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("Cookie", COOKIE_SESSION_ID);
@@ -76,18 +79,13 @@ public class APIWorker {
                 .append(" ")
                 .append(con.getResponseMessage())
                 .append("\n");
-        BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream()),"ISO-8859-1"));
+        BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream()), "ISO-8859-1"));
         StringBuilder sb = new StringBuilder();
         String output;
         while ((output = br.readLine()) != null) {
             sb.append(output);
         }
-//        JsonReader jsonReader = Json.createReader(new StringReader(sb.toString()));
-//        JsonObject jsonObject=jsonReader.readObject();
-        String myString = sb.toString();
-        byte bytes[] = myString.getBytes("ISO-8859-1");
-        String value = new String(bytes, "UTF-8");
-        return sb.toString();//new String(sb.toString().getBytes());
+        return sb;
     }
 
     /**

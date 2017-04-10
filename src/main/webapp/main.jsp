@@ -1,10 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: smd
-  Date: 06-Apr-17
-  Time: 11:59
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="mshchurkin.Controllers.MainController" %>
+<%
+    MainController mc=new MainController();
+    String res= mc.columnsInit();
+%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -16,26 +14,28 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="http://code.gijgo.com/1.3.0/js/gijgo.js" type="text/javascript"></script>
     <link href="http://code.gijgo.com/1.3.0/css/gijgo.css" rel="stylesheet" type="text/css"/>
-    <title>Hello World</title>
+
+    <title>Полное заключение</title>
+    <meta charset="utf-8" />
 </head>
 <body>
-<h2>
-    <c:out value="${COOKIE_SESSION}"/>
-</h2>
+
 <table id="grid"></table>
-<script type="text/javascript">
+
+<script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
         var grid = $('#grid').grid({
+            title: 'Полное заключение',
+            columns: <%=res%>,
             dataSource: '/data',
-            columns: [
-                { field: 'id', width: 32 },
-                { field: 'name', sortable: true },
-                { field: 'firstQuestion', sortable: true }
-            ],
-            pager: { limit: 5 }
         });
     });
 </script>
 
 </body>
+
+<h4 style="position:fixed; width:100%; padding:5px; bottom:0px;">
+    <c:out value="${COOKIE_SESSION}"/>
+</h4>
+
 </html>

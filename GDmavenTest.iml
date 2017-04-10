@@ -47,5 +47,7 @@
     <orderEntry type="library" name="fancy" level="application" />
     <orderEntry type="library" name="jsgrid" level="application" />
     <orderEntry type="library" name="gijgo" level="application" />
+    <orderEntry type="library" name="jquery-ui" level="application" />
+    <orderEntry type="library" name="pqgrid.dev" level="application" />
   </component>
 </module>

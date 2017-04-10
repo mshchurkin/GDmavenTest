@@ -2,6 +2,6 @@
   "name": "GDnpm",
   "version": "1.0.0",
   "scripts": {
-    "install":"npm install fancygrid"
+    "install":"npm install jquery"
   }
 }
