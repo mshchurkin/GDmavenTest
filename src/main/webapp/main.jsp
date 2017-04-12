@@ -18,7 +18,7 @@
     <title>Полное заключение</title>
     <meta charset="utf-8" />
 </head>
-<body>
+<body  style="background-color: #e7f1fa;">
 
 <table id="grid"></table>
 
@@ -26,15 +26,17 @@
     $(document).ready(function () {
         var grid = $('#grid').grid({
             title: 'Полное заключение',
+            columnReorder: true,
+            uiLibrary: 'bootstrap',
             columns: <%=res%>,
-            dataSource: '/data',
+            dataSource: '/data'
         });
     });
 </script>
 
 </body>
 
-<h4 style="position:fixed; width:100%; padding:5px; bottom:0px;">
+<h4 style="position:fixed; width:100%; padding:5px; bottom:0px;  color: maroon; ">
     <c:out value="${COOKIE_SESSION}"/>
 </h4>
 

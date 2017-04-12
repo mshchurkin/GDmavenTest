@@ -31,24 +31,16 @@ public class APIWorker {
      * GreenData API Authorization
      */
     public String executeAuthorization() throws IOException {
-
         String url = "http://46.146.245.83/demo2//api/authentication?j_password=d0xkR5h675lO57P&j_username=admin#/";
-
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
         con.setRequestMethod("POST");
-
-        int responseCode = con.getResponseCode();
         COOKIE_SESSION_ID = con.getResponseMessage();
-
         StringBuilder builder = new StringBuilder();
         builder.append(con.getResponseCode())
                 .append(" ")
                 .append(con.getResponseMessage())
                 .append("\n");
-
-        System.out.println(responseCode);
         Map<String, List<String>> map = con.getHeaderFields();
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
             if (entry.getKey() != null)
@@ -57,7 +49,6 @@ public class APIWorker {
                 }
         }
         COOKIE_SESSION_ID = COOKIE_SESSION_ID.replace(";path=/demo2/;HttpOnly", "");
-        //System.out.println(COOKIE_SESSION_ID);
         con.disconnect();
         return COOKIE_SESSION_ID;
     }

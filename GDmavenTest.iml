@@ -49,5 +49,7 @@
     <orderEntry type="library" name="gijgo" level="application" />
     <orderEntry type="library" name="jquery-ui" level="application" />
     <orderEntry type="library" name="pqgrid.dev" level="application" />
+    <orderEntry type="library" name="pivot" level="application" />
+    <orderEntry type="library" name="jquery_pivot" level="application" />
   </component>
 </module>
