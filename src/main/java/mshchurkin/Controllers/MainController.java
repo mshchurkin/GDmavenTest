@@ -33,7 +33,7 @@ public class MainController {
     @RequestMapping(value = "/data", produces = "application/json")
     @ResponseBody
     public String data() throws IOException {
-        String urlString = "http://46.146.245.83/demo2//api/risk/forms/335329/instances/existing";
+        String urlString = "http://46.146.245.83/demo2//api/sys/attrValueTypes";
         URL url = new URL(urlString);
         StringBuilder sb = aw.executeGet(url, null);
         return sb.toString();
@@ -41,7 +41,7 @@ public class MainController {
 
     public String columnsInit() throws IOException {
         String columnsResult="";
-        String urlString = "http://46.146.245.83/demo2//api/risk/forms/335329/instances/existing";
+        String urlString = "http://46.146.245.83/demo2//api/sys/attrValueTypes";
         URL url = new URL(urlString);
         StringBuilder sb = aw.executeGet(url, null);
         JsonReader jsonReader = Json.createReader(new StringReader(sb.toString()));
