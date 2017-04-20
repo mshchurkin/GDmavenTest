@@ -2,6 +2,10 @@
   "name": "GDnpm",
   "version": "1.0.0",
   "scripts": {
-    "install":"npm install jquery"
+    "install": "npm install jquery",
+    "installCharts": "npm install chart.js --save"
+  },
+  "dependencies": {
+    "chart.js": "^2.5.0"
   }
 }

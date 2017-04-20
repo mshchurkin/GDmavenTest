@@ -14,6 +14,8 @@ import javax.json.JsonReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @Controller
@@ -43,7 +45,9 @@ public class MainController {
         String columnsResult="";
         String urlString = "http://46.146.245.83/demo2//api/sys/attrValueTypes";
         URL url = new URL(urlString);
-        StringBuilder sb = aw.executeGet(url, null);
+        Map<String,String> params=new HashMap<>();
+        //params.put("objid","679970");
+        StringBuilder sb = aw.executeGet(url, params);
         JsonReader jsonReader = Json.createReader(new StringReader(sb.toString()));
         JsonArray jsonArray=jsonReader.readArray();
         JsonObject jsonObject=jsonArray.getJsonObject(0);

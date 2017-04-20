@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
@@ -61,10 +60,19 @@ public class APIWorker {
      * @return json string
      * @throws IOException can't establish connection IOException
      */
-    public StringBuilder executeGet(URL url, Dictionary<String, String> params) throws IOException {
+    public StringBuilder executeGet(URL url, Map<String, String> params) throws IOException {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("Cookie", COOKIE_SESSION_ID);
+        if(params!=null) {
+            if ((params.size() != 0)) {
+                for (Map.Entry<String, String> param : params.entrySet()) {
+                    String property = param.getKey();
+                    String value = param.getValue();
+                    con.setRequestProperty(property, value);
+                }
+            }
+        }
         StringBuilder builder = new StringBuilder();
         builder.append(con.getResponseCode())
                 .append(" ")
@@ -87,17 +95,37 @@ public class APIWorker {
      * @return response code
      * @throws IOException can't establish connection IOException
      */
-    int executePost(URL url, JsonObject jsonObject) throws IOException {
+    public StringBuilder executePost(URL url, JsonObject jsonObject, Map<String, String> params) throws IOException {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         con.setDoOutput(true);
         con.setDoInput(true);
         con.setRequestMethod("POST");
         con.setRequestProperty("Cookie", COOKIE_SESSION_ID);
+        if(params!=null) {
+            if (params.size() != 0) {
+                for (Map.Entry<String, String> param : params.entrySet()) {
+                    String property = param.getKey();
+                    String value = param.getValue();
+                    con.setRequestProperty(property, value);
+                }
+            }
+        }
         OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
         os.write(jsonObject.toString());
         os.close();
         int responseCode = con.getResponseCode();
-        return responseCode;
+        StringBuilder builder = new StringBuilder();
+        builder.append(con.getResponseCode())
+                .append(" ")
+                .append(con.getResponseMessage())
+                .append("\n");
+        BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream()), "ISO-8859-1"));
+        StringBuilder sb = new StringBuilder();
+        String output;
+        while ((output = br.readLine()) != null) {
+            sb.append(output);
+        }
+        return sb;
     }
 }
