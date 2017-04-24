@@ -1,6 +1,7 @@
 package mshchurkin.Controllers;
 
 import mshchurkin.Backend.APIWorker;
+import mshchurkin.Backend.URLRequestMaker;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,12 +9,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -21,10 +20,14 @@ import java.util.Set;
 @Controller
 @Scope("session")
 public class MainController {
-    APIWorker aw = APIWorker.getInstance();
 
+    private URLRequestMaker urlRequestMaker=new URLRequestMaker();
+    private static StringBuilder sb;
+
+    //mappings
     @RequestMapping(value = "/")
     public ModelAndView home() throws IOException {
+        APIWorker aw=APIWorker.getInstance();
         ModelAndView mav = new ModelAndView();
         mav.setViewName("main");
         String message = aw.executeAuthorization();
@@ -35,22 +38,28 @@ public class MainController {
     @RequestMapping(value = "/data", produces = "application/json")
     @ResponseBody
     public String data() throws IOException {
-        String urlString = "http://46.146.245.83/demo2//api/sys/attrValueTypes";
-        URL url = new URL(urlString);
-        StringBuilder sb = aw.executeGet(url, null);
+
         return sb.toString();
     }
 
     public String columnsInit() throws IOException {
-        String columnsResult="";
-        String urlString = "http://46.146.245.83/demo2//api/sys/attrValueTypes";
-        URL url = new URL(urlString);
+
+        String urlString = "http://46.146.245.83/demo2//api/risk/riskForm/formDataValue";
         Map<String,String> params=new HashMap<>();
-        //params.put("objid","679970");
-        StringBuilder sb = aw.executeGet(url, params);
+        params.put("formInstId","679770");
+        params.put("rowId","680131");
+        params.put("pokId","680130");
+
+        urlRequestMaker.setParams(params);
+        urlRequestMaker.setUrlString(urlString);
+        sb = urlRequestMaker.getSb();
+
+        String columnsResult="";
+
         JsonReader jsonReader = Json.createReader(new StringReader(sb.toString()));
-        JsonArray jsonArray=jsonReader.readArray();
-        JsonObject jsonObject=jsonArray.getJsonObject(0);
+        //JsonArray jsonArray=jsonReader.readArray();
+        //JsonObject jsonObject=jsonArray.getJsonObject(0);
+        JsonObject jsonObject=jsonReader.readObject();
         Set<String> s =jsonObject.keySet();
         Object[] arr=s.toArray();
         columnsResult=columnsResult+"[";
@@ -61,6 +70,5 @@ public class MainController {
         columnsResult=columnsResult+"]";
         return columnsResult;
     }
-
 }
 

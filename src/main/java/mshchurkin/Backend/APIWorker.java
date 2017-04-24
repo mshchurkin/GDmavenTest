@@ -31,15 +31,12 @@ public class APIWorker {
      */
     public String executeAuthorization() throws IOException {
         String url = "http://46.146.245.83/demo2//api/authentication?j_password=d0xkR5h675lO57P&j_username=admin#/";
+
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("POST");
         COOKIE_SESSION_ID = con.getResponseMessage();
-        StringBuilder builder = new StringBuilder();
-        builder.append(con.getResponseCode())
-                .append(" ")
-                .append(con.getResponseMessage())
-                .append("\n");
+
         Map<String, List<String>> map = con.getHeaderFields();
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
             if (entry.getKey() != null)
@@ -61,23 +58,11 @@ public class APIWorker {
      * @throws IOException can't establish connection IOException
      */
     public StringBuilder executeGet(URL url, Map<String, String> params) throws IOException {
+
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("Cookie", COOKIE_SESSION_ID);
-        if(params!=null) {
-            if ((params.size() != 0)) {
-                for (Map.Entry<String, String> param : params.entrySet()) {
-                    String property = param.getKey();
-                    String value = param.getValue();
-                    con.setRequestProperty(property, value);
-                }
-            }
-        }
-        StringBuilder builder = new StringBuilder();
-        builder.append(con.getResponseCode())
-                .append(" ")
-                .append(con.getResponseMessage())
-                .append("\n");
+
         BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream()), "ISO-8859-1"));
         StringBuilder sb = new StringBuilder();
         String output;
@@ -102,24 +87,11 @@ public class APIWorker {
         con.setDoInput(true);
         con.setRequestMethod("POST");
         con.setRequestProperty("Cookie", COOKIE_SESSION_ID);
-        if(params!=null) {
-            if (params.size() != 0) {
-                for (Map.Entry<String, String> param : params.entrySet()) {
-                    String property = param.getKey();
-                    String value = param.getValue();
-                    con.setRequestProperty(property, value);
-                }
-            }
-        }
+
         OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
         os.write(jsonObject.toString());
         os.close();
-        int responseCode = con.getResponseCode();
-        StringBuilder builder = new StringBuilder();
-        builder.append(con.getResponseCode())
-                .append(" ")
-                .append(con.getResponseMessage())
-                .append("\n");
+
         BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream()), "ISO-8859-1"));
         StringBuilder sb = new StringBuilder();
         String output;
