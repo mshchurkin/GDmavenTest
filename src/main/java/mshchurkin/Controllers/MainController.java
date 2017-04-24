@@ -9,12 +9,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 @Controller
@@ -44,27 +43,27 @@ public class MainController {
 
     public String columnsInit() throws IOException {
 
-        String urlString = "http://46.146.245.83/demo2//api/risk/riskForm/formDataValue";
-        Map<String,String> params=new HashMap<>();
-        params.put("formInstId","679770");
-        params.put("rowId","680131");
-        params.put("pokId","680130");
+        String urlString = "http://46.146.245.83/demo2//api/risk/riskForm/formsByStandartId/679769";
+//        Map<String,String> params=new HashMap<>();
+//        params.put("formInstId","679770");
+//        params.put("rowId","680131");
+//        params.put("pokId","680130");
 
-        urlRequestMaker.setParams(params);
+        //urlRequestMaker.setParams(params);
         urlRequestMaker.setUrlString(urlString);
         sb = urlRequestMaker.getSb();
 
         String columnsResult="";
 
         JsonReader jsonReader = Json.createReader(new StringReader(sb.toString()));
-        //JsonArray jsonArray=jsonReader.readArray();
-        //JsonObject jsonObject=jsonArray.getJsonObject(0);
-        JsonObject jsonObject=jsonReader.readObject();
+        JsonArray jsonArray=jsonReader.readArray();
+        JsonObject jsonObject=jsonArray.getJsonObject(0);
+        //JsonObject jsonObject=jsonReader.readObject();
         Set<String> s =jsonObject.keySet();
         Object[] arr=s.toArray();
         columnsResult=columnsResult+"[";
-        for(int i=0;i<arr.length;i++) {
-            columnsResult = columnsResult + "{ field: '" + arr[i].toString() + "'},";
+        for (Object anArr : arr) {
+            columnsResult = columnsResult + "{ field: '" + anArr.toString() + "'},";
         }
         columnsResult=columnsResult.substring(0,columnsResult.length()-1);
         columnsResult=columnsResult+"]";
