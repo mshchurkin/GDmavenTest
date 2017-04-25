@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.IOException;
@@ -20,13 +19,13 @@ import java.util.Set;
 @Scope("session")
 public class MainController {
 
-    private URLRequestMaker urlRequestMaker=new URLRequestMaker();
+    private URLRequestMaker urlRequestMaker = new URLRequestMaker();
     private static StringBuilder sb;
 
     //mappings
     @RequestMapping(value = "/")
     public ModelAndView home() throws IOException {
-        APIWorker aw=APIWorker.getInstance();
+        APIWorker aw = APIWorker.getInstance();
         ModelAndView mav = new ModelAndView();
         mav.setViewName("main");
         String message = aw.executeAuthorization();
@@ -37,13 +36,12 @@ public class MainController {
     @RequestMapping(value = "/data", produces = "application/json")
     @ResponseBody
     public String data() throws IOException {
-
-        return sb.toString();
+        return sb.toString().substring(10,sb.toString().length()-1);
     }
 
     public String columnsInit() throws IOException {
 
-        String urlString = "http://46.146.245.83/demo2//api/risk/riskForm/formsByStandartId/679769";
+        String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/679970";
 //        Map<String,String> params=new HashMap<>();
 //        params.put("formInstId","679770");
 //        params.put("rowId","680131");
@@ -53,21 +51,20 @@ public class MainController {
         urlRequestMaker.setUrlString(urlString);
         sb = urlRequestMaker.getSb();
 
-        String columnsResult="";
+        String columnsResult = "";
 
         JsonReader jsonReader = Json.createReader(new StringReader(sb.toString()));
-        JsonArray jsonArray=jsonReader.readArray();
-        JsonObject jsonObject=jsonArray.getJsonObject(0);
-        //JsonObject jsonObject=jsonReader.readObject();
-        Set<String> s =jsonObject.keySet();
-        Object[] arr=s.toArray();
-        columnsResult=columnsResult+"[";
+        //JsonArray jsonArray=jsonReader.readArray();
+        //JsonObject jsonObject=jsonArray.getJsonObject(0);
+        JsonObject jsonObject = jsonReader.readObject();
+        Set<String> s = jsonObject.keySet();
+        Object[] arr = s.toArray();
+        columnsResult = columnsResult + "[";
         for (Object anArr : arr) {
             columnsResult = columnsResult + "{ field: '" + anArr.toString() + "'},";
         }
-        columnsResult=columnsResult.substring(0,columnsResult.length()-1);
-        columnsResult=columnsResult+"]";
+        columnsResult = columnsResult.substring(0, columnsResult.length() - 1);
+        columnsResult = columnsResult + "]";
         return columnsResult;
     }
 }
-
