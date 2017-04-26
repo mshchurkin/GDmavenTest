@@ -1,7 +1,13 @@
 package mshchurkin.Backend;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,9 +40,25 @@ public class URLRequestMaker {
         Map<String,String> headers=new HashMap<>();
 
         sb = aw.executeGet(url, headers);
+        JsonReader jsonReader = Json.createReader(new StringReader(sb.toString()));
+        JsonObject jsonObject=jsonReader.readObject();
+        JsonObject res= getJsonArray(jsonObject,"FORM_INST_DATA");
         return sb;
     }
 
+    public JsonObject getJsonArray(JsonObject jsonObject, String wantedJsonObjName){
+        return jsonObject.getJsonObject("values").getJsonObject(wantedJsonObjName);
+    }
+
+    public ArrayList<String> getNames(JsonArray jsonArray, String wantedKey){
+        ArrayList<String> names=new ArrayList<>();
+        for(int i=0;i<jsonArray.size();i++){
+            JsonObject jsonObject=jsonArray.getJsonObject(i);
+            String res=jsonObject.getJsonString(wantedKey).getString();
+            names.add(res);
+        }
+        return names;
+    }
     public String getUrlString() {
         return urlString;
     }

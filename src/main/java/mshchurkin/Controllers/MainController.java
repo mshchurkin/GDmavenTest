@@ -41,7 +41,7 @@ public class MainController {
 
     public String columnsInit() throws IOException {
 
-        String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/679970";
+        String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/680032";
 //        Map<String,String> params=new HashMap<>();
 //        params.put("formInstId","679770");
 //        params.put("rowId","680131");
