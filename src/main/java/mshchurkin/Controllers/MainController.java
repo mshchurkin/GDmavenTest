@@ -1,28 +1,23 @@
 package mshchurkin.Controllers;
 
 import mshchurkin.Backend.APIWorker;
-import mshchurkin.Backend.URLRequestMaker;
+import mshchurkin.Backend.JsonLogics;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import java.io.IOException;
-import java.io.StringReader;
-import java.util.Set;
 
 @Controller
 @Scope("session")
 public class MainController {
 
-    private URLRequestMaker urlRequestMaker = new URLRequestMaker();
-    private static StringBuilder sb;
+    private JsonLogics jsonLogics = new JsonLogics();
+    private static String dataJSON;
 
-    //mappings
+    //region mappings
     @RequestMapping(value = "/")
     public ModelAndView home() throws IOException {
         APIWorker aw = APIWorker.getInstance();
@@ -33,38 +28,33 @@ public class MainController {
         return mav;
     }
 
-    @RequestMapping(value = "/data", produces = "application/json")
+    @RequestMapping(value = "/dataF5", produces = "application/json")
     @ResponseBody
-    public String data() throws IOException {
-        return sb.toString().substring(10,sb.toString().length()-1);
+    public String dataF5() throws IOException {
+        String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/680031";
+        jsonLogics.setUrlString(urlString);
+        return jsonLogics.getResultJsonArray().toString();
     }
 
-    public String columnsInit() throws IOException {
-
+    @RequestMapping(value = "/dataF1", produces = "application/json")
+    @ResponseBody
+    public String dataF1() throws IOException {
         String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/680032";
-//        Map<String,String> params=new HashMap<>();
-//        params.put("formInstId","679770");
-//        params.put("rowId","680131");
-//        params.put("pokId","680130");
+        jsonLogics.setUrlString(urlString);
+        return jsonLogics.getResultJsonArray().toString();
+    }
+    //endregion
 
-        //urlRequestMaker.setParams(params);
-        urlRequestMaker.setUrlString(urlString);
-        sb = urlRequestMaker.getSb();
+    /**
+     * Sends JSON to page containing table columns info
+     * @param formId identifier of form
+     * @return table columns info JSON
+     * @throws IOException form was not found on GreenData Server
+     */
+    public String columnsInit(Integer formId) throws IOException {
 
-        String columnsResult = "";
-
-        JsonReader jsonReader = Json.createReader(new StringReader(sb.toString()));
-        //JsonArray jsonArray=jsonReader.readArray();
-        //JsonObject jsonObject=jsonArray.getJsonObject(0);
-        JsonObject jsonObject = jsonReader.readObject();
-        Set<String> s = jsonObject.keySet();
-        Object[] arr = s.toArray();
-        columnsResult = columnsResult + "[";
-        for (Object anArr : arr) {
-            columnsResult = columnsResult + "{ field: '" + anArr.toString() + "'},";
-        }
-        columnsResult = columnsResult.substring(0, columnsResult.length() - 1);
-        columnsResult = columnsResult + "]";
-        return columnsResult;
+        String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/"+formId+"";
+        jsonLogics.setUrlString(urlString);
+        return jsonLogics.getColumnNames().toString();
     }
 }

@@ -1,7 +1,8 @@
 <%@ page import="mshchurkin.Controllers.MainController" %>
 <%
     MainController mc = new MainController();
-    String res = mc.columnsInit();
+    String gridF5Cols = mc.columnsInit(680031);
+    String gridF1Cols=mc.columnsInit(680032);
 %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,9 +11,9 @@
 <html>
 <head>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="http://code.gijgo.com/1.3.0/js/gijgo.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" charset="UTF-8"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" charset="UTF-8"></script>
+    <script src="http://code.gijgo.com/1.3.0/js/gijgo.js" type="text/javascript" charset="UTF-8"></script>
     <link href="http://code.gijgo.com/1.3.0/css/gijgo.css" rel="stylesheet" type="text/css"/>
     <title>Полное заключение</title>
     <meta charset="utf-8"/>
@@ -62,51 +63,43 @@
 <body style="background-color: #e7f1fa;">
 <div class="tabs">
     <ul>
-        <li>Заключение</li>
-        <li>Структура бухгалтерского баланаса</li>
-        <li>Страхование</li>
-        <li>Перестрахование</li>
-        <li>Перестрахование по учетным группам</li>
-        <li>Сальдо по перестрахованию</li>
-        <li>Состав активов</li>
-        <li>Страховые резервы</li>
-        <li>Финансовый результат</li>
-        <li>Контрольные показатели</li>
-        <li>Данные статистической отчетности по ф.№1-С страховой огранизации</li>
-        <li>Динамика основных показателей</li>
-        <li>График динамика основных показателей</li>
+        <li>Основной раздел ф.5</li>
+        <li>Основной раздел ф.1</li>
     </ul>
     <div>
         <div>
-            <table id="grid"></table>
+            <table id="gridF5"></table>
 
             <script type="text/javascript" charset="utf-8">
                 $(document).ready(function () {
-                    var grid = $('#grid').grid({
-                        title: 'Заключение',
+                    var grid = $('#gridF5').grid({
+                        title: 'Основной раздел ф.5',
                         columnReorder: true,
                         uiLibrary: 'bootstrap',
-                        columns: <%=res%>,
-                        dataSource: '/data'
+                        columns: <%=gridF5Cols%>,
+                        dataSource: '/dataF5'
                     });
                 });
             </script>
         </div>
-        <div>Структура бухгалтерского баланаса</div>
-        <div>Страхование</div>
-        <div>Перестрахование</div>
-        <div>Перестрахование по учетным группам</div>
-        <div>Сальдо по перестрахованию</div>
-        <div>Состав активов</div>
-        <div>Страховые резервы</div>
-        <div>Финансовый результа</div>
-        <div>Контрольные показатели</div>
-        <div>Данные статистической отчетности по ф.№1-С страховой огранизации</div>
-        <div>Динамика основных показателей</div>
-        <div>График динамика основных показателей</div>
+        <div>
+            <table id="gridF1"></table>
+
+            <script type="text/javascript" charset="utf-8">
+                $(document).ready(function () {
+                    var grid = $('#gridF1').grid({
+                        title: 'Основной раздел ф.1',
+                        columnReorder: true,
+                        uiLibrary: 'bootstrap',
+                        columns: <%=gridF1Cols%>,
+                        dataSource: '/dataF1'
+                    });
+                });
+            </script>
+        </div>
     </div>
 </div>
-<script>
+<script charset="UTF-8">
     $(document).ready(function () {
         $(".tabs").lightTabs();
     });
