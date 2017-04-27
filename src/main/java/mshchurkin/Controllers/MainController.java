@@ -28,7 +28,7 @@ public class MainController {
         return mav;
     }
 
-    @RequestMapping(value = "/dataF5", produces = "application/json")
+    @RequestMapping(value = "/data/F5", produces = "application/json")
     @ResponseBody
     public String dataF5() throws IOException {
         String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/680031";
@@ -36,7 +36,7 @@ public class MainController {
         return jsonLogics.getResultJsonArray().toString();
     }
 
-    @RequestMapping(value = "/dataF1", produces = "application/json")
+    @RequestMapping(value = "/data/F1", produces = "application/json")
     @ResponseBody
     public String dataF1() throws IOException {
         String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/680032";

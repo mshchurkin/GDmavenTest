@@ -77,7 +77,7 @@
                         columnReorder: true,
                         uiLibrary: 'bootstrap',
                         columns: <%=gridF5Cols%>,
-                        dataSource: '/dataF5'
+                        dataSource: '/data/F5'
                     });
                 });
             </script>
@@ -92,7 +92,7 @@
                         columnReorder: true,
                         uiLibrary: 'bootstrap',
                         columns: <%=gridF1Cols%>,
-                        dataSource: '/dataF1'
+                        dataSource: '/data/F1'
                     });
                 });
             </script>

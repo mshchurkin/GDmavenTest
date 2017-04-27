@@ -57,7 +57,6 @@ public class JsonLogicsTest {
         Assert.assertEquals(expected,actual);
     }
 
-
     @Test
     public void testGettingNames()throws Exception{
         ArrayList<String> expected=new ArrayList<>();
@@ -96,7 +95,7 @@ public class JsonLogicsTest {
     @Test
     public void testGettingColumnNames()throws Exception{
         jsonLogics.setUrlString("http://46.146.245.83/demo2/api/sys/dynamicObjects/680031");
-        String expected="[{ field: \"ID\"},{ field: \"1\", title: \"????????????\"},{ field: \"2\" , title: \"Значение\"}]";
+        String expected="[{ field: \"ID\"},{ field: \"1\", title: \"Наименование\"},{ field: \"2\" , title: \"Значение\"}]";
         String actual=jsonLogics.getColumnNames();
         Assert.assertEquals(expected,actual);
     }
@@ -109,6 +108,7 @@ public class JsonLogicsTest {
         JsonArray expected=jsonReader.readArray();
         Assert.assertEquals(expected,actual);
     }
+
     @Test
     public void testGettingValue() throws Exception{
         jsonLogics.setUrlString("http://46.146.245.83/demo2/api/sys/dynamicObjects/680032");

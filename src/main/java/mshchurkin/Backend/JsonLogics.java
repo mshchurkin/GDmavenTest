@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.*;
+
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -153,13 +154,13 @@ public class JsonLogics {
 
         columnsResult = columnsResult + "[{ field: \"ID\"},{ field: \"1\", title: \"Наименование\"},";
         for (String pokName : pokNames) {
-            columnsResult = columnsResult + "{ field: \"2\" , title: \"" + pokName + "\"},";
+            String temp ="{ field: \"2\" , title: \"" + pokName + "\"},";
+            byte[] ptext = temp.getBytes(ISO_8859_1);
+            temp = new String(ptext, UTF_8);
+            columnsResult = columnsResult + temp;
         }
         columnsResult = columnsResult.substring(0, columnsResult.length() - 1);
         columnsResult = columnsResult + "]";
-        byte[] ptext = columnsResult.getBytes(ISO_8859_1);
-        columnsResult = new String(ptext, UTF_8);
-
         return columnsResult;
     }
 
