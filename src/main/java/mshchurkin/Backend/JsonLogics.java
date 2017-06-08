@@ -81,7 +81,9 @@ public class JsonLogics {
                 jsonReader.close();
                 String name=this.getJsonArray(jsonObject,"NAME").get("value").toString();
                 name=name.substring(1,name.length()-1);
-                names.add(name);
+                byte[] ptext = name.getBytes(ISO_8859_1);
+                String fRes = new String(ptext, UTF_8);
+                names.add(fRes);
             }
         }
         names= new ArrayList<>(new LinkedHashSet<>(names));
@@ -110,7 +112,7 @@ public class JsonLogics {
      * @return JSON with selected form data
      * @throws IOException page on GreenData server not found
      */
-    public JsonArray getResultJsonArray() throws IOException {
+    public String getResultJsonArray() throws IOException {
         StringBuilder stringBuilder=this.getSb();
         JsonReader jsonReader = Json.createReader(new StringReader(stringBuilder.toString()));
         JsonObject jsonObject=jsonReader.readObject();
@@ -122,18 +124,17 @@ public class JsonLogics {
 
         String tempString="[";
         for (int i=0;i<rowNames.size();i++) {
-            tempString = tempString + "{ \"ID\":  " + i + ", \"1\":  \"" + rowNames.get(i) + "\",\"2\":  " + values.get(i) + " }, ";
+            byte[] ptext = rowNames.get(i).getBytes(ISO_8859_1);
+            String rowName = new String(ptext, UTF_8);
+            tempString = tempString + "{ \"ID\":  " + i + ", \"1\":  \"" + rowName + "\",\"2\":  " + values.get(i) + " }, ";
             tempString = tempString.replaceAll("\r?\n", "");
         }
         tempString=tempString.substring(0,tempString.length()-2);
         tempString=tempString+"]";
-        byte[] ptext = tempString.getBytes(ISO_8859_1);
-        tempString = new String(ptext, UTF_8);
-        JsonReader tempReader=Json.createReader(new StringReader(tempString));
 //            for(String pokName:pokNames) {
 //                tempString=tempString+"'"+pokName+"': ''"
 //            }
-        return tempReader.readArray();
+        return tempString;
     }
 
     /**
@@ -153,8 +154,10 @@ public class JsonLogics {
         ArrayList<String>pokNames=this.getNames(jsonArray,"pokId");
 
         columnsResult = columnsResult + "[{ field: \"ID\"},{ field: \"1\", title: \"Наименование\"},";
+        Integer count=2;
         for (String pokName : pokNames) {
-            String temp ="{ field: \"2\" , title: \"" + pokName + "\"},";
+            String temp ="{ field: \""+count+"\" , title: \"" + pokName + "\"},";
+            count++;
             byte[] ptext = temp.getBytes(ISO_8859_1);
             temp = new String(ptext, UTF_8);
             columnsResult = columnsResult + temp;

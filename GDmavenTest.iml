@@ -54,5 +54,7 @@
     <orderEntry type="library" name="Maven: org.glassfish:javax.json:1.0.4" level="project" />
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.8.1" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
+    <orderEntry type="library" name="Chart" level="application" />
+    <orderEntry type="library" name="Chart.bundle" level="application" />
   </component>
 </module>

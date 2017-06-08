@@ -2,7 +2,9 @@
 <%
     MainController mc = new MainController();
     String gridF5Cols = mc.columnsInit(680031);
-    String gridF1Cols=mc.columnsInit(680032);
+    String gridF1Cols = mc.columnsInit(680032);
+    String gridF5ColsDate = mc.columnsInit(680329);
+    String gridF1ColsDate = mc.columnsInit(680319);
 %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -14,6 +16,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" charset="UTF-8"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" charset="UTF-8"></script>
     <script src="http://code.gijgo.com/1.3.0/js/gijgo.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js" type="text/javascript" charset="UTF-8"></script>
     <link href="http://code.gijgo.com/1.3.0/css/gijgo.css" rel="stylesheet" type="text/css"/>
     <title>Полное заключение</title>
     <meta charset="utf-8"/>
@@ -68,34 +72,64 @@
     </ul>
     <div>
         <div>
-            <table id="gridF5"></table>
+            <div>
+                <table id="gridF5"></table>
+                <table id="gridF5date"></table>
 
-            <script type="text/javascript" charset="utf-8">
-                $(document).ready(function () {
-                    var grid = $('#gridF5').grid({
-                        title: 'Основной раздел ф.5',
-                        columnReorder: true,
-                        uiLibrary: 'bootstrap',
-                        columns: <%=gridF5Cols%>,
-                        dataSource: '/data/F5'
+                <script type="text/javascript" charset="utf-8">
+                    $(document).ready(function () {
+                        var grid = $('#gridF5').grid({
+                            title: 'III квартал 2016 года',
+                            columnReorder: true,
+                            uiLibrary: 'bootstrap',
+                            columns: <%=gridF5Cols%>,
+                            dataSource: '/data/F5date2'
+                        });
                     });
-                });
-            </script>
+                </script>
+
+                <script type="text/javascript" charset="utf-8">
+                    $(document).ready(function () {
+                        var grid = $('#gridF5date').grid({
+                            title: 'IV квартал 2016 года',
+                            columnReorder: true,
+                            uiLibrary: 'bootstrap',
+                            columns: <%=gridF5ColsDate%>,
+                            dataSource: '/data/F5date1'
+                        });
+                    });
+                </script>
+            </div>
         </div>
         <div>
-            <table id="gridF1"></table>
+            <div>
+                <table id="gridF1"></table>
+                <table id="gridF1date"></table>
 
-            <script type="text/javascript" charset="utf-8">
-                $(document).ready(function () {
-                    var grid = $('#gridF1').grid({
-                        title: 'Основной раздел ф.1',
-                        columnReorder: true,
-                        uiLibrary: 'bootstrap',
-                        columns: <%=gridF1Cols%>,
-                        dataSource: '/data/F1'
+                <script type="text/javascript" charset="utf-8">
+                    $(document).ready(function () {
+                        var grid = $('#gridF1').grid({
+                            title: 'III квартал 2016 года',
+                            columnReorder: true,
+                            uiLibrary: 'bootstrap',
+                            columns: <%=gridF1Cols%>,
+                            dataSource: '/data/F1date2'
+                        });
                     });
-                });
-            </script>
+                </script>
+
+                <script type="text/javascript" charset="utf-8">
+                    $(document).ready(function () {
+                        var grid = $('#gridF1date').grid({
+                            title: 'IV квартал 2016 года',
+                            columnReorder: true,
+                            uiLibrary: 'bootstrap',
+                            columns: <%=gridF1ColsDate%>,
+                            dataSource: '/data/F1date1'
+                        });
+                    });
+                </script>
+            </div>
         </div>
     </div>
 </div>

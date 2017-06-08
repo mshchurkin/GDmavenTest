@@ -10,6 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 @Controller
 @Scope("session")
 public class MainController {
@@ -28,20 +31,48 @@ public class MainController {
         return mav;
     }
 
-    @RequestMapping(value = "/data/F5", produces = "application/json")
+    @RequestMapping(value = "/data/F5date1", produces = "application/json")
     @ResponseBody
     public String dataF5() throws IOException {
-        String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/680031";
-        jsonLogics.setUrlString(urlString);
-        return jsonLogics.getResultJsonArray().toString();
+        String fRes="";
+        for(int i=0;i<29;i++) {
+            String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/680632";
+            jsonLogics.setUrlString(urlString);
+            String res = jsonLogics.getResultJsonArray();
+            byte[] ptext = res.getBytes(ISO_8859_1);
+            fRes = new String(ptext, UTF_8);
+        }
+        return fRes;
     }
 
-    @RequestMapping(value = "/data/F1", produces = "application/json")
+    @RequestMapping(value = "/data/F1date1", produces = "application/json")
     @ResponseBody
     public String dataF1() throws IOException {
-        String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/680032";
+        for(int i=0;i<6;i++) {
+            String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/680624";
+            jsonLogics.setUrlString(urlString);
+            jsonLogics.getResultJsonArray();
+        }
+        return "1";
+    }
+
+    @RequestMapping(value = "/data/F5date2", produces = "application/json")
+    @ResponseBody
+    public String dataF5date2() throws IOException {
+        String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/680329";
         jsonLogics.setUrlString(urlString);
-        return jsonLogics.getResultJsonArray().toString();
+        String res= jsonLogics.getResultJsonArray();
+        byte[] ptext = res.getBytes(ISO_8859_1);
+        String fRes = new String(ptext, UTF_8);
+        return fRes;
+    }
+
+    @RequestMapping(value = "/data/F1date2", produces = "application/json")
+    @ResponseBody
+    public String dataF1date2() throws IOException {
+        String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/680319";
+        jsonLogics.setUrlString(urlString);
+        return jsonLogics.getResultJsonArray();
     }
     //endregion
 
@@ -55,6 +86,6 @@ public class MainController {
 
         String urlString = "http://46.146.245.83/demo2/api/sys/dynamicObjects/"+formId+"";
         jsonLogics.setUrlString(urlString);
-        return jsonLogics.getColumnNames().toString();
+        return jsonLogics.getColumnNames();
     }
 }
